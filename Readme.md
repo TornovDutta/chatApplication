@@ -144,5 +144,5 @@ POST http://localhost:8080/api/message?msg=Hello%20Kafka
 - Kafka runs on port `9092`.
 - Spring Boot backend runs on port `8080`.
 - Messages are sent as plain strings to the Kafka topic `chat_topic`.
-- No frontend included â€” fully backend and REST API driven.
+- No frontend included , fully backend and REST API driven.
 
