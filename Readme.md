@@ -111,29 +111,35 @@ spring.kafka.producer.value-serializer=org.springframework.kafka.support.seriali
 chat.topic.name=chat_topic
 server.port=8080
 ```
-
 ---
 
 ## **REST API Endpoints**
 
-| Method | Endpoint           | Parameters      | Description                     |
-|--------|------------------|----------------|---------------------------------|
-| GET    | `/api/message`    | None           | Returns all messages consumed from Kafka. |
-| POST   | `/api/message`    | `msg` (String) | Sends a message to Kafka.      |
+| Method | Endpoint        | Parameters                         | Description                                 |
+|--------|----------------|-----------------------------------|---------------------------------------------|
+| GET    | `/api/message` | None                              | Returns all messages consumed from Kafka.   |
+| POST   | `/api/message` | `Messages` JSON object in request body | Sends a message to Kafka.                  |
 
-**Example Request (POST)**
+### Example Request (POST)
 
 ```http
-POST http://localhost:8080/api/message?msg=Hello%20Kafka
+POST http://localhost:8080/api/message
+Content-Type: application/json
+
+{
+    "sender": "Tornov",
+    "content": "Hello Kafka",
+    "time": "2025-10-12T22:00:00"
+}
 ```
 
-**Example Response (GET)**
+### Example Response (GET)
 
 ```json
 [
-    "Hello Tornov",
-    "Hi there!",
-    "How are you?"
+  "Hello Tornov",
+  "Hi there!",
+  "How are you?"
 ]
 ```
 
