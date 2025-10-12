@@ -23,7 +23,7 @@ public class ChatController {
         return consumer.getMessages();
     }
     @PostMapping()
-    public void sendMessage(@RequestParam String msg){
+    public void sendMessage(@RequestParam Messages msg){
         producer.sendMessage(msg);
     }
 
