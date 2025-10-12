@@ -1,21 +1,27 @@
 package org.example.chatapplication.controller;
 
+import org.example.chatapplication.consumer.ChatConsumer;
 import org.example.chatapplication.producer.ChatProducer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/message")
 public class ChatController {
     private final ChatProducer producer;
+    private final ChatConsumer consumer;
 
-    public ChatController(ChatProducer producer) {
+    public ChatController(ChatProducer producer, ChatConsumer consumer) {
         this.producer = producer;
+        this.consumer = consumer;
     }
-    @GetMapping("chat")
-    public String chat(){
-        return null;
+
+//    @GetMapping("")
+//    public List<Messages> chat(){
+//        return consumer.getMessages();
+//    }
+    @PostMapping()
+    public void sendMessage(@RequestParam String msg){
+//        producer.sendMessages();
     }
 
 }
