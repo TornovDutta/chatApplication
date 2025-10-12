@@ -1,8 +1,11 @@
 package org.example.chatapplication.controller;
 
 import org.example.chatapplication.consumer.ChatConsumer;
+import org.example.chatapplication.model.Messages;
 import org.example.chatapplication.producer.ChatProducer;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/message")
@@ -15,10 +18,10 @@ public class ChatController {
         this.consumer = consumer;
     }
 
-//    @GetMapping("")
-//    public List<Messages> chat(){
-//        return consumer.getMessages();
-//    }
+    @GetMapping("")
+    public List<Messages> chat(){
+        return consumer.getMessages();
+    }
     @PostMapping()
     public void sendMessage(@RequestParam String msg){
 //        producer.sendMessages();
