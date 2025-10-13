@@ -2,7 +2,7 @@ Kafka Chat Application (Spring Boot Backend)
 
 This is a **backend-only chat application** built using **Spring Boot** and **Apache Kafka (KRaft mode)**. The application allows sending and receiving chat messages via REST API endpoints.
 
-Kafka is run using **Docker**, so thereâ€™s no need for a local Kafka installation.
+Kafka is run using **Docker**.
 
 ---
 
