@@ -55,7 +55,7 @@ src/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/TornovDutta/chatApplication.git
+git clone https://github.com/TornovDutta/ChatApplication.git
 cd ChatApplication
 ```
 
