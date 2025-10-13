@@ -1,12 +1,7 @@
 package org.example.chatapplication.producer;
-
-
 import org.example.chatapplication.model.Messages;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
-
-
 @Service
 public class ChatProducer {
     private final KafkaTemplate<String,Messages> kafkaTemplate;

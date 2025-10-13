@@ -75,24 +75,33 @@ mvn spring-boot:run
 ## **Docker Compose for Kafka (KRaft Mode)**
 
 ```yaml
+version: '3.8'
+
 services:
   kafka:
     image: apache/kafka:4.0.1
     container_name: kafka
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-      KAFKA_KRAFT_MODE: 'yes'
-      KAFKA_LOG_DIRS: /kafka/data
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
     ports:
       - "9092:9092"
     volumes:
-      - kafka_data:/kafka/data
+      - kafka_data:/var/lib/kafka/data
 
 volumes:
   kafka_data:
+
 ```
 
 ---
@@ -100,16 +109,27 @@ volumes:
 ## **Application Properties (`application.properties`)**
 
 ```properties
+spring.application.name=chat-application
+server.port=8080
+
 spring.kafka.bootstrap-servers=localhost:9092
-spring.kafka.consumer.group-id=chat_group
+
+# Producer
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer
+spring.kafka.producer.acks=all
+
+# Consumer
+spring.kafka.consumer.group-id=chat-group
 spring.kafka.consumer.auto-offset-reset=earliest
 spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
 spring.kafka.consumer.value-deserializer=org.springframework.kafka.support.serializer.JsonDeserializer
-spring.kafka.consumer.properties.spring.json.trusted-packages=*
-spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
-spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer
-chat.topic.name=chat_topic
-server.port=8080
+spring.kafka.consumer.properties.spring.json.trusted.packages=*
+
+# Logging
+logging.level.org.springframework.kafka=INFO
+logging.level.org.apache.kafka=INFO
+
 ```
 ---
 
@@ -136,11 +156,13 @@ Content-Type: application/json
 ### Example Response (GET)
 
 ```json
-[
-  "Hello Tornov",
-  "Hi there!",
-  "How are you?"
-]
+{
+
+  "sender": "Tornov",
+  "content": "Hello Kafka",
+  "time": "2025-10-12T22:00:00"
+
+}
 ```
 
 ---
