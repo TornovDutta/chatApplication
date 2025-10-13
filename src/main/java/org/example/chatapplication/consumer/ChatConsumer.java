@@ -9,14 +9,15 @@ import java.util.List;
 
 @Service
 public class ChatConsumer {
-    private final List<String> messageStore=new ArrayList<>();
+    private final List<Messages> messageStore = new ArrayList<>();
 
-    @KafkaListener(topics = "chat-message",groupId = "chat-group")
-    public void  listen(String msg) {
+    @KafkaListener(topics = "chat-message", groupId = "chat-group")
+    public void listen(Messages msg) {
         messageStore.add(msg);
-        System.out.println("Received message:"+msg);
+        System.out.println("Received message: " + msg);
     }
-    public List<String> getMessages(){
+
+    public List<Messages> getMessages() {
         return new ArrayList<>(messageStore);
     }
 }

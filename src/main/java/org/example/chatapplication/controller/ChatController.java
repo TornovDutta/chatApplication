@@ -19,11 +19,11 @@ public class ChatController {
     }
 
     @GetMapping("")
-    public List<String> chat(){
+    public List<Messages> chat(){
         return consumer.getMessages();
     }
     @PostMapping()
-    public void sendMessage(@RequestParam Messages msg){
+    public void sendMessage(@RequestBody Messages msg){
         producer.sendMessage(msg);
     }
 
