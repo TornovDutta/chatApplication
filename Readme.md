@@ -35,6 +35,8 @@ src/
         └── org/
             └── example/
                 └── chatapplication/
+                    ├── config/
+                    │   └── KafkaConfig.java
                     ├── controller/
                     │   └── ChatController.java
                     ├── producer/
@@ -43,6 +45,7 @@ src/
                     │   └── ChatConsumer.java
                     └── model/
                         └── Messages.java
+
 
 ```
 
